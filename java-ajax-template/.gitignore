@@ -1,0 +1,8 @@
+target/
+build/
+bin/
+*.iml
+*.ipr
+*.iws
+.*
+!/.gitignore

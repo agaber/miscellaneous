@@ -1,0 +1,24 @@
+buildscript {
+  repositories {
+    maven {
+      url uri('../repo')
+    }
+  }
+  dependencies {
+    classpath 'org.acme:MyJavaPlugin:0.1'
+  }
+}
+
+apply plugin: 'java'
+
+// repositories {
+//   mavenCentral()
+// }
+
+// dependencies {
+//   testCompile 'junit:junit:4.+'
+// }
+
+task checkitout(type: org.acme.gradle.MyJavaTask) {
+  println("running consumer task!")
+}

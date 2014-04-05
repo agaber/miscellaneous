@@ -1,0 +1,47 @@
+<form data-ng-submit="ctrl.send()">
+  <fieldset>
+    <legend>Why don't you tell it to somebody who gives a shit?</legend>
+
+    <div>
+      <label for="from">From</label>
+      <input type="text" name="from"
+          placeholder="you@microsuck.com"
+          data-ng-model="ctrl.email.from" />
+    </div>
+
+    <div>
+      <label for="to">To</label>
+      <input type="text" name="to"
+          placeholder="yournan@sukit.gov"
+          data-ng-model="ctrl.email.to" />
+    </div>
+
+    <div>
+      <label for="cc">CC</label>
+      <input type="text" name="cc" data-ng-model="ctrl.email.cc" />
+    </div>
+
+    <div>
+      <label for="bcc">BCC</label>
+      <input type="text" name="bcc" data-ng-model="ctrl.email.bcc" />
+    </div>
+
+    <div>
+      <label for="subject">Subject</label>
+      <input type="text" name="Subject"
+          placeholder="u havin a giggl m8?"
+          data-ng-model="ctrl.email.subject"/>
+    </div>
+
+    <div>
+      <label for="message">Message</label>
+      <textarea name="message" rows="15" cols="100"
+          placeholder="u fink its funny? ur 1 cheeky kunt m8 i swear ill bash ye fookin head in. 1v1 me irl i swear on me mum ill wreck u."
+          data-ng-model="ctrl.email.message"></textarea>
+    </div>
+
+    <input type="button" value="Spell Check"
+        data-ng-click="ctrl.spellCheck()" />
+    <input type="submit" value="Submit" />
+  </fieldset>
+</form>

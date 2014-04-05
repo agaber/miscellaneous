@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLScema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>chatapp</artifactId>
+  <groupId>com.acme</groupId>
+  <name>chatapp</name>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <description>
+    Web application using Angular and a host of other weird frameworks.
+    See the README for more info.
+  </description>
+
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <downloadSources>true</downloadSources>
+    <downloadJavadocs>true</downloadJavadocs>
+    <com.google.inject.version>3.0</com.google.inject.version>
+    <com.sun.jersey.version>1.14</com.sun.jersey.version>
+    <org.codehaus.jackson.version>1.9.9</org.codehaus.jackson.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>13.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${com.google.inject.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+      <version>${com.google.inject.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-json</artifactId>
+      <version>${com.sun.jersey.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>${com.sun.jersey.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-guice</artifactId>
+      <version>${com.sun.jersey.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>${org.codehaus.jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-jaxrs</artifactId>
+      <version>${org.codehaus.jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>${org.codehaus.jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymockclassextension</artifactId>
+      <version>3.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+
+    <plugins>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+        <version>6.1.12</version>
+        <configuration>
+          <webAppConfig>
+            <contextPath>/${project.artifactId}</contextPath>
+            <baseResource implementation="org.mortbay.resource.ResourceCollection">
+              <resourcesAsCSV>
+                src/test/javascript,src/main/webapp,src/main/javascript,target/generated-sources/javascript
+              </resourcesAsCSV>
+            </baseResource>
+          </webAppConfig>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <!-- We cannot cache-bust after files are copied but before war. -->
+              <directory>target/generated-sources/webapp</directory>
+              <directory>src/main/webapp</directory>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <tasks>
+                <!-- deps.js is needed when running uncompiled source in jetty. -->
+                <echo>Creating target/generated-sources/javascript/deps.js.</echo>
+                <mkdir dir="${basedir}/target/generated-sources/javascript" />
+                <exec executable="python" failOnError="true">
+                  <arg value="${basedir}/build/closure/depswriter.py" />
+                  <arg value="--root=src/main/javascript" />
+                  <arg value="--output=${basedir}/target/generated-sources/javascript/deps.js" />
+                </exec>
+              </tasks>
+            </configuration>
+            <goals><goal>run</goal></goals>
+          </execution>
+
+          <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <!-- Run Closure javascript compiler. -->
+                <mkdir dir="${basedir}/target/javascript" />
+                <echo>Compiling javascript files.</echo>
+
+                <fileset id="srcjs" dir="${basedir}/src/main/javascript">
+                  <include name="**/*.js" />
+                  <exclude name="**/*.externs.js" />
+                </fileset>
+                <pathconvert pathsep="  " property="jsfiles" refid="srcjs" />
+
+                <exec executable="java" failOnError="true">
+                  <arg value="-jar" />
+                  <arg value="${basedir}/build/closure/compiler.jar" />
+                  <arg value="--compilation_level=SIMPLE_OPTIMIZATIONS" />
+                  <arg value="--charset=UTF-8" />
+                  <arg value="--manage_closure_dependencies" />
+                  <arg value="--generate_exports" />
+                  <arg value="--warning_level=QUIET" />
+                  <arg value="--js_output_file=${basedir}/target/javascript/${project.artifactId}.js" />
+                  <arg line="--js ${jsfiles}" />
+                </exec>
+              </tasks>
+            </configuration>
+            <goals><goal>run</goal></goals>
+          </execution>
+
+          <execution>
+            <id>prepare-package</id>
+            <phase>prepare-package</phase>
+            <configuration>
+              <tasks>
+                <!-- Copy compiled javascript into war folder. -->
+                <copy todir="${basedir}/target/${project.artifactId}">
+                  <fileset dir="${basedir}/target/javascript">
+                    <include name="*" />
+                  </fileset>
+                </copy>
+              </tasks>
+            </configuration>
+            <goals><goal>run</goal></goals>
+          </execution>
+          
+          <execution>
+            <id>package</id>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <!-- Cache bust static files by appending the checksum in the src tags. -->
+                <!-- Doing this means the browser will cache by version.                -->
+                <mkdir dir="${basedir}/target/cachebusted" />
+                <exec executable="python" failOnError="true">
+                  <arg value="${basedir}/build/cache_busting.py" />
+                  <arg value="--context=${project.artifactId}" />
+                  <arg value="--html_output_directory=${basedir}/target/cachebusted" />
+                </exec>
+                
+                <!-- Yeah pretty ridiculous but since we cannot hook on to -->
+                <!-- some point after the war directory is created but     -->
+                <!-- before the actual .war file is made, we need to       -->
+                <!-- update the existing war file with the new files.      -->
+                <war destfile="${basedir}/target/${project.artifactId}.war" update="true">
+                  <zipfileset dir="${basedir}/target/cachebusted" />
+                </war>
+              </tasks>
+            </configuration>
+            <goals><goal>run</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <!--  Javscript unit testing with Jasmine. -->
+        <groupId>com.github.searls</groupId>
+        <artifactId>jasmine-maven-plugin</artifactId>
+        <version>1.1.0</version>
+        <executions>
+          <execution><goals><goal>test</goal></goals></execution>
+        </executions>
+        <configuration>
+          <jsSrcDir>${basedir}</jsSrcDir>
+          <specIncludes>
+            <include>**/*_spec.js</include>
+          </specIncludes>
+          <sourceIncludes>
+            <!-- require.js needed so jasmine doesn't choke on magical -->
+            <!-- closure compiler calls.                               -->
+            <include>src/test/javascript/require.js</include>
+
+            <!-- Unfortunately we need to specify deps in order.       -->
+            <include>src/test/javascript/angular-0.9.19.js</include>
+            <include>src/test/javascript/angular-mocks-0.9.19.js</include>
+            <include>src/main/javascript/jquery/*.js</include>
+            <include>src/main/javascript/underscore/*.js</include>
+
+            <include>src/main/javascript/**/*.js</include>
+          </sourceIncludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+

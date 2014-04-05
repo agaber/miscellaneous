@@ -1,0 +1,10 @@
+# Ignore hidden files (except .gitignore)
+.*
+!/.gitignore
+
+# Ignore generated output
+target/
+build/
+
+# Ignore intellij files.
+*.iml

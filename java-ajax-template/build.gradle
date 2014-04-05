@@ -1,0 +1,48 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'jetty'
+apply plugin: 'war'
+
+// This defaults to the project directory name, which is just fine normally.
+war.baseName = 'myapp'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // Google.
+  compile 'com.google.guava:guava:16.0.1'
+  compile 'com.google.inject:guice:3.0'
+  compile 'com.google.inject.extensions:guice-servlet:3.0'
+
+  // Jersey REST.
+  compile 'com.sun.jersey:jersey-core:1.18.1'
+  compile 'com.sun.jersey:jersey-json:1.18.1'
+  compile 'com.sun.jersey:jersey-server:1.18.1'
+  compile 'com.sun.jersey:jersey-servlet:1.18.1'
+  compile 'com.sun.jersey.contribs:jersey-guice:1.18.1'
+
+  // JSON.
+  compile 'org.codehaus.jackson:jackson-jaxrs:1.9.13'
+
+  // Servlets and javax.
+  compile 'javax.inject:javax.inject:1'
+  providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+  providedCompile 'javax.servlet:jstl:1.2'
+  providedCompile 'javax.servlet.jsp:jsp-api:2.2'
+  providedCompile 'javax.ws.rs:javax.ws.rs-api:2.0'
+
+  // Sending emails.
+  compile 'javax.mail:mail:1.4'
+  compile 'javax.activation:activation:1.1.1'
+
+  // Logging.
+  compile 'ch.qos.logback:logback-classic:1.1.1'
+  compile 'org.slf4j:slf4j-api:1.7.6'
+
+  // Testing.
+  testCompile 'com.google.jimfs:jimfs:1.0-rc1'
+  testCompile 'junit:junit:4.+'
+  testCompile 'org.mockito:mockito-all:1.9.+'
+}

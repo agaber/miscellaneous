@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.acme'
+version = '0.2'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile gradleApi()
+  testCompile 'junit:junit:4.+'
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      repository(url: uri('../repo'))
+    }
+  }
+}
