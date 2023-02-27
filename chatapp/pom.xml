@@ -19,15 +19,15 @@
   </description>
 
   <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <downloadSources>true</downloadSources>
     <downloadJavadocs>true</downloadJavadocs>
     <com.google.inject.version>3.0</com.google.inject.version>
     <com.sun.jersey.version>1.12</com.sun.jersey.version>
-    <org.codehaus.jackson.version>1.9.5</org.codehaus.jackson.version>
+    <org.codehaus.jackson.version>1.9.13</org.codehaus.jackson.version>
   </properties>
 
   <dependencies>
@@ -187,7 +187,7 @@
                 <!-- deps.js is needed when running uncompiled source in jetty. -->
                 <echo>Creating target/generated-sources/javascript/deps.js.</echo>
                 <mkdir dir="${basedir}/target/generated-sources/javascript" />
-                <exec executable="python" failOnError="true">
+                <exec executable="python3" failOnError="true">
                   <arg value="${basedir}/build/closure/depswriter.py" />
                   <arg value="--root=src/main/javascript" />
                   <arg value="--output=${basedir}/target/generated-sources/javascript/deps.js" />
