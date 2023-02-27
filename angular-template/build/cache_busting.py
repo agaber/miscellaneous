@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """"
 This script calculates the checksum of static files and updates the src tags
